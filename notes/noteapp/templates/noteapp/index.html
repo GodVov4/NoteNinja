@@ -1,0 +1,121 @@
+{% extends "noteapp/base.html" %}
+
+{% block content %}
+<main class="col-md-5 mx-auto mt-3" style="min-width: 400px;">
+    {% if user.is_authenticated %}
+    <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all"
+                type="button" role="tab" aria-controls="nav-all" aria-selected="true"
+                style="--bs-nav-link-color: grey;">Show all
+        </button>
+        <button class="nav-link " id="nav-incomplete-tab" data-bs-toggle="tab" data-bs-target="#nav-incomplete"
+                type="button" role="tab" aria-controls="nav-incomplete" aria-selected="false"
+                style="--bs-nav-link-color: grey;">Incomplete
+        </button>
+        <button class="nav-link" id="nav-completed-tab" data-bs-toggle="tab" data-bs-target="#nav-completed"
+                type="button" role="tab" aria-controls="nav-completed" aria-selected="false"
+                style="--bs-nav-link-color: grey;">Completed
+        </button>
+    </div>
+    <div class="tab-content py-3" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
+            {% for note in notes %}
+            {% if not note.done %}
+            <div class="d-flex">
+                <div class="col-8 list-group p-1">
+                    <a href="{% url 'noteapp:detail' note.id %}" role="button"
+                       class="link-underline link-underline-opacity-0 text-black list-group-item list-group-item-action list-group-item-light shadow rounded">
+                        {{ note.name }}
+                    </a>
+                </div>
+                <div class="col-4 p-1 d-flex justify-content-evenly">
+                    <a href="{% url 'noteapp:set_done' note.id %}" role="button"
+                       class="btn btn-outline-success btn-sm p-2 flex-fill shadow rounded" style="margin-right:4px;">
+                        Done
+                    </a>
+                    <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+                       class="btn btn-outline-danger btn-sm p-2 flex-fill shadow rounded" style="margin-left:4px;">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% for note in notes %}
+            {% if note.done %}
+            <div class="d-flex">
+                <div class="col-8 list-group list-group-horizontal p-1">
+                    <a href="{% url 'noteapp:detail' note.id %}" role="button"
+                       class="text-secondary text-decoration-line-through list-group-item list-group-item-action list-group-item-success shadow rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="LimeGreen"
+                             class="bi bi-check-lg my-auto"
+                             viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>
+                        </svg>
+                        {{ note.name }}
+                    </a>
+                </div>
+                <div class="col-4 p-1 d-flex">
+                    <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+                       class="btn btn-outline-danger btn-sm p-2 d-block flex-fill shadow rounded">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="nav-incomplete" role="tabpanel" aria-labelledby="nav-incomplete-tab"
+             tabindex="0">
+            {% for note in notes %}
+            {% if not note.done %}
+            <div class="d-flex">
+                <div class="col-8 list-group p-1">
+                    <a href="{% url 'noteapp:detail' note.id %}" role="button"
+                       class="link-underline link-underline-opacity-0 text-black list-group-item list-group-item-action list-group-item-light shadow rounded">
+                        {{ note.name }}
+                    </a>
+                </div>
+                <div class="col-4 p-1 d-flex justify-content-evenly">
+                    <a href="{% url 'noteapp:set_done' note.id %}" role="button"
+                       class="btn btn-outline-success btn-sm p-2 flex-fill shadow rounded" style="margin-right:4px;">
+                        Done
+                    </a>
+                    <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+                       class="btn btn-outline-danger btn-sm p-2 flex-fill shadow rounded" style="margin-left:4px;">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab" tabindex="0">
+            {% for note in notes %}
+            {% if note.done %}
+            <div class="d-flex">
+                <div class="col-8 list-group list-group-horizontal p-1">
+                    <a href="{% url 'noteapp:detail' note.id %}" role="button"
+                       class="text-secondary text-decoration-line-through list-group-item list-group-item-action list-group-item-success shadow rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="LimeGreen"
+                             class="bi bi-check-lg my-auto"
+                             viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>
+                        </svg>
+                        {{ note.name }}
+                    </a>
+                </div>
+                <div class="col-4 p-1 d-flex">
+                    <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+                       class="btn btn-outline-danger btn-sm p-2 d-block flex-fill shadow rounded">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

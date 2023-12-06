@@ -1,0 +1,47 @@
+{% extends "noteapp/base.html" %}
+{% load extract_tags %}
+
+{% block content %}
+<div class="container col-md-5 mx-auto p-3">
+    <h1 class="text-center shadow bg-body-tertiary rounded">{{note.name}}</h1>
+    <div class="container p-1 mb-2 shadow bg-body-tertiary rounded">
+        <p class="m-1"><b>Description:</b></p>
+        <p class="m-1">{{note.description}}</p>
+    </div>
+    <p class="container p-2 mb-2 shadow bg-body-tertiary rounded">
+        <b>Time of creation: </b><span>{{note.created}}</span>
+    </p>
+    <p class="container p-2 mb-2 shadow bg-body-tertiary rounded">
+        <b>Status:</b>
+        {% if note.done %}
+        <ins>Completed</ins>
+        {% else %}
+        <i>Not implemented</i>
+        {% endif %}
+    </p>
+    <p class="container p-2 mb-2 shadow bg-body-tertiary rounded"><b>Tags: </b><small>{{ note.tags|tags }}</small></p>
+    {% if not note.done %}
+    <div class="text-center">
+        <a href="{% url 'noteapp:set_done' note.id %}" role="button"
+           class="btn btn-outline-success btn-sm p-2 flex-fill shadow rounded" style="width: 100px;">
+            Done
+        </a>
+        <a href="{% url 'noteapp:edit_note' note.id %}" role="button"
+           class="btn btn-outline-info btn-sm p-2 flex-fill shadow rounded" style="width: 100px;">
+            Edit
+        </a>
+        <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+           class="btn btn-outline-danger btn-sm p-2 flex-fill shadow rounded" style="width: 100px;">
+            Delete
+        </a>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <a href="{% url 'noteapp:delete_note' note.id %}" role="button"
+           class="btn btn-outline-danger btn-sm p-2 flex-fill shadow rounded" style="width: 100px;">
+            Delete
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "noteapp/base.html" %}
+
+{% block content %}
+<form class="vstack gap-2 col-md-5 mx-auto mt-3" method="POST">
+    {% csrf_token %}
+    <div class="input-group shadow bg-body-tertiary rounded">
+        <span class="input-group-text" id="note_label" style="min-width: 110px">Name</span>
+        {{ form.name }}
+    </div>
+    <span>{{ form.errors.name }}</span>
+    <div class="input-group shadow bg-body-tertiary rounded">
+        <span class="input-group-text" id="disc_label" style="min-width: 110px">Description</span>
+        {{ form.description }}
+    </div>
+    <span>{{ form.errors.description }}</span>
+    <div class="input-group shadow bg-body-tertiary rounded">
+        <span class="input-group-text" id="select_label" style="min-width: 110px">Select tags</span>
+        <select class="form-select" name="tags" multiple size="4" required>
+            {% for tag in tags %}
+            <option value="{{tag.name}}">{{tag.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="btn-group shadow bg-body-tertiary rounded">
+        <button type="submit" class="btn btn-outline-primary w-50" >Create</button>
+        <button type="reset" class="btn btn-outline-secondary w-50">Reset</button>
+    </div>
+</form>
+{% endblock %}

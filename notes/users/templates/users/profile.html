@@ -1,0 +1,35 @@
+{% extends "noteapp/base.html" %}
+
+{% block content %}
+
+<div class="text-center">
+    <h1 class="shadow bg-body-tertiary rounded">Profile: {{user.username}}</h1>
+    <img alt="avatar of user" src="{{ user.profile.avatar.url }}" class="border border-2 rounded-circle">
+</div>
+
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form class="vstack gap-2 col-md-5 mx-auto mt-3" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="text-center">
+        <div class="form-group ">
+            <div class="shadow bg-body-tertiary rounded mb-2">
+                <label for="formFile" class="form-label "><b>Change Avatar:</b></label>
+            </div>
+            {{ profile_form.avatar }}
+            <span>{{ profile_form.errors.avatar }}</span>
+        </div>
+    </div>
+    <div class="btn-group shadow bg-body-tertiary rounded">
+        <button type="submit" class="btn btn-outline-primary w-50">Save Changes</button>
+        <button type="reset" class="btn btn-outline-secondary w-50">Reset</button>
+    </div>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "noteapp/base.html" %}
+
+{% block content %}
+
+<div class="text-center shadow bg-body-tertiary rounded">
+    <h2>Login</h2>
+</div>
+
+<form class="vstack gap-2 col-md-5 mx-auto mt-3" action="{% url 'users:login' %}" method="post">
+    {% csrf_token %}
+    <div class="input-group shadow bg-body-tertiary rounded">
+        <span class="input-group-text" style="width: 104px;">Username</span>
+        {{ form.username }}
+    </div>
+    <span>{{ form.errors.username }}</span>
+    <div class="input-group shadow bg-body-tertiary rounded">
+        <span class="input-group-text" style="width: 104px;">Password</span>
+        {{ form.password }}
+    </div>
+    <span>{{ form.errors.password }}</span>
+    <div class="btn-group shadow bg-body-tertiary rounded">
+        <button type="submit" class="btn btn-outline-primary w-50">Submit</button>
+        <button type="reset" class="btn btn-outline-secondary w-50">Reset</button>
+    </div>
+</form>
+
+{% endblock %}
